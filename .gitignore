@@ -51,3 +51,10 @@ yarn.lock
 # Ignore environment files
 .env
 Bitpanda-Telegram-Bot/src/.env
+
+# Ignore SQLite database
+src/users.db
+users.db
+
+# Ignore users.json
+src/user_data.json
