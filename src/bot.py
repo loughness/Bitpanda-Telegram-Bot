@@ -21,16 +21,6 @@ logging.basicConfig(
     level=logging.INFO
 )
 
-def load_users():
-    if not os.path.exists(USER_DATE_FILE):
-        return {}
-    with open(USER_DATE_FILE, 'r') as file:
-        return json.load(file)
-    
-def save_users(users):
-    with open(USER_DATE_FILE, 'w') as file:
-        json.dump(users, file)
-
 def get_start_message():
     return """
 👋 *Welcome to Bitpanda Portfolio Bot!* 📊
@@ -62,26 +52,14 @@ Happy trading! 🚀💰
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     start_message = get_start_message()
 
-    users = load_users()
     user_id = str(update.effective_user.id)
 
-    if user_id not in users:
-        # this means they are a first time user
-        users[user_id] = {"first_seen": update.effective_message.date.isoformat()}
-        save_users(users)
-    
-        await context.bot.send_message(
-            chat_id=update.effective_chat.id,
-            text=start_message,
-            parse_mode="Markdown"
-        )
-    else:
-        # Returning user
-        await context.bot.send_message(
-            chat_id=update.effective_chat.id,
-            text=f"Welcome back!\n" + start_message,
-            parse_mode='Markdown'
-        )
+    # First-time users are simply welcomed, no data storage
+    await context.bot.send_message(
+        chat_id=update.effective_chat.id,
+        text=f"Welcome back!\n" + start_message if user_id else start_message,
+        parse_mode="Markdown"
+    )
 
 
 async def help(update: Update, context: ContextTypes.DEFAULT_TYPE):
