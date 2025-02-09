@@ -1,0 +1,53 @@
+# Ignore system-specific files
+.DS_Store
+Thumbs.db
+
+# Ignore Python compiled files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Ignore virtual environment
+venv/
+env/
+*.venv
+Pipfile
+Pipfile.lock
+
+# Ignore logs and temp files
+*.log
+*.tmp
+*.bak
+
+# Ignore dependency files
+node_modules/
+package-lock.json
+yarn.lock
+
+# Ignore OS swap files
+*.swp
+*.swo
+
+# Ignore editor/IDE specific files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Ignore executable binaries
+*.exe
+*.out
+*.app
+*.bin
+
+# Ignore compiled C/C++ files
+*.o
+*.obj
+
+# Ignore Shell history (if scripts use sensitive info)
+.history
+
+# Ignore environment files
+.env
+Bitpanda-Telegram-Bot/src/.env
