@@ -10,9 +10,9 @@ from uuid import uuid4
 from bitpanda import BitpandaClient
 from database import store_api_key, get_api_key, delete_api_key, setup_database
 
+
 load_dotenv()
 api_token = os.getenv('BOT_TOKEN')
-USER_DATE_FILE = "user_data.json"
 
 # This sets up the logging module
 # this will give insight into when and why things are not working as expected
@@ -209,6 +209,32 @@ async def logout(update: Update, context: ContextTypes.DEFAULT_TYPE):
         parse_mode="Markdown"
     )
 
+async def security(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    message = (
+    "🛡️ *Security & Privacy Statement*\n\n"
+    "Your security is our top priority. We understand the importance of keeping your financial data safe, "
+    "and we’ve designed this bot with *strong security measures* to ensure your information remains *private and protected*.\n\n"
+    "🔐 *How We Keep Your Data Safe:*\n"
+    "✅ *Secure API Communication:* All requests between the bot and Bitpanda are sent over *encrypted HTTPS connections*.\n"
+    "✅ *Read-Only API Access:* This bot *only uses read-only API keys*, meaning it *cannot perform trades, withdraw funds, or make any changes* to your Bitpanda account.\n"
+    "✅ *No API Key Exposure:*\n"
+    "   - Your API key is *never shared* with anyone.\n"
+    "   - It is *securely encrypted* while the bot is running.\n"
+    "   - Not even the bot’s creator can access your API key.\n"
+    "✅ *No Permanent Storage:* This bot *does not store* your API key permanently. Once you log out or the bot restarts, your key is automatically erased.\n"
+    "✅ *User Isolation:* Each user’s data is *completely private* and cannot be accessed by anyone else.\n\n"
+    "🔍 *How You Can Stay Safe:*\n"
+    "- *Never share your API key* with anyone.\n"
+    "- *Use only read-only API keys* (never enable withdrawal/trading permissions).\n"
+    "- *Revoke your API key* at any time in your Bitpanda account settings if needed.\n\n"
+    "Your privacy and security are *our top priorities*, and we have taken every precaution to ensure a *safe and trusted experience*. "
+    "If you have any concerns, feel free to ask! 🔐"
+    )
+
+    
+    await context.bot.send_message(chat_id=update.effective_chat.id, text=message, parse_mode='Markdown')
+
+
 async def unknown(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await context.bot.send_message(chat_id=update.effective_chat.id, text="Sorry, I didn't understand that command. Type /help for more info")
 
@@ -222,6 +248,8 @@ if __name__ == '__main__':
     caps_handler = CommandHandler('caps', caps)
     help_handler = CommandHandler('help', help)
     balance_handler = CommandHandler('balance', balance)
+
+    security_handler = CommandHandler('security', security)
 
     login_handler = CommandHandler('login', login)
     logout_handler = CommandHandler('logout', logout)
@@ -239,6 +267,7 @@ if __name__ == '__main__':
     application.add_handler(caps_handler)
     application.add_handler(help_handler)
     application.add_handler(balance_handler)
+    application.add_handler(security_handler)
 
     application.add_handler(login_handler)
     application.add_handler(logout_handler)
